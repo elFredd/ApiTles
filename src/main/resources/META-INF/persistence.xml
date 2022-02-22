@@ -12,6 +12,16 @@
         <class>modelo.db.Repartidor</class>
         <class>modelo.db.Tienda</class>
         <class>modelo.db.Usuario</class>
+        <class>modelo.db.Configuracion</class>
+        <class>modelo.db.Categoria</class>
+        <class>modelo.db.CategoriaProducto</class>
+        <class>modelo.db.IngredientesExtra</class>
+        <class>modelo.db.ProdIngre</class>
+        <class>modelo.db.VariantesIngrediente</class>
+        <class>modelo.db.TipoVariante</class>
+        <class>modelo.db.VarianteProducto</class>
+        <class>modelo.db.CategoriaTipoVariane</class>
+        <class>modelo.db.Direccion</class>
 
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>

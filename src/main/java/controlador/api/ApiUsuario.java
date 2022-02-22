@@ -3,6 +3,9 @@ package controlador.api;
 import controlador.core.AES.EncripAES;
 import controlador.servicios.Servicios;
 import controlador.servicios.TipoUsuario;
+import modelo.DTO.TiendaDTO;
+import modelo.DTO.UsuarioDTO;
+import modelo.db.Tienda;
 import modelo.db.Usuario;
 import org.json.JSONObject;
 
@@ -36,12 +39,10 @@ public class ApiUsuario {
         Servicios servicios = new Servicios();
         Usuario usuario = (Usuario) servicios.buscarUnicoValor("FROM Usuario where idUsuario="+idUsuario+ " and status=1");
         if(usuario!=null){
-            jo.put("Nombre",usuario.getNombre());
-            jo.put("Puntos",usuario.getPuntos());
-
+            jo.put("Usuario",new UsuarioDTO(usuario));
         }else{
             //El usuario fue dado de baja
-         jo.put("Error",1);
+            jo.put("Error",1);
         }
 
 
@@ -49,4 +50,27 @@ public class ApiUsuario {
         return Response.ok(jo.toString()).build();
     }
 
+    @POST
+    @Path("/ConsultaTiendaInicio")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ConsultaTiendaInicio(@QueryParam("usuarioId")int idUsuario) {
+
+
+        Servicios servicios = new Servicios();
+        Tienda tienda = (Tienda) servicios.buscarUnicoValor("FROM Tienda where usuarioByIdUsuario="+idUsuario+ " and status=1");
+        servicios.CerrarConexion();
+        TiendaDTO tiendaDTO =new TiendaDTO(tienda);
+        return Response.ok(tiendaDTO).build();
+    }
+
+    @POST
+    @Path("/AbrirCerrarTienda")
+    public Response AbrirCerrarTienda(@QueryParam("idTienda")int idTienda) {
+        Servicios servicios = new Servicios();
+        Tienda tienda = (Tienda) servicios.encontrar(idTienda,Tienda.class);
+        tienda.setActivaJornada(tienda.getActivaJornada()==1?0:1);
+        servicios.actualizar(tienda);
+        servicios.CerrarConexion();
+        return Response.ok().build();
+    }
 }

@@ -19,12 +19,11 @@ import java.io.IOException;
 public class GuardarImagenFotoPerfil extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String root = getServletContext().getRealPath("/");
         response.setContentType("text/html; charset=UTF-8");
         Servicios servicios = new Servicios();
         Tienda tienda=(Tienda)servicios.buscarUnicoValor("FROM Tienda WHERE usuarioByIdUsuario="+request.getParameter("usuarioId"));
         tienda.setStatusFoto(0);
-        String path=root+"/uploads/TheStore/FotoPerfil";
+        String path=request.getContextPath()+"/uploads/TheStore/FotoPerfil";
         String nombre=tienda.getUsuarioByIdUsuario().getNombre()+tienda.getIdTienda()+".png";
         new UploadsFiles().uploadImagenDataUrl(path,nombre,request.getParameter("dataUrlImagen"));
         tienda.setFotoPerfil(path+"/"+nombre);

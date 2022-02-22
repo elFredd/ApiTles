@@ -25,10 +25,11 @@ public class UploadsFiles {
                         path.mkdirs();
                     if (!fichero.exists()) {
                         fichero.delete();
-                        byte[] imagedata = DatatypeConverter.parseBase64Binary(finalDataUrl.substring(finalDataUrl.indexOf(",") + 1));
-                        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
-                        ImageIO.write(bufferedImage, "png", new File(folder + "/" + file));
                     }
+                    byte[] imagedata = DatatypeConverter.parseBase64Binary(finalDataUrl.substring(finalDataUrl.indexOf(",") + 1));
+                    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagedata));
+                    ImageIO.write(bufferedImage, "png", new File(folder + "/" + file));
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

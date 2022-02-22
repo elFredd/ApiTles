@@ -15,7 +15,6 @@ public class Tienda implements Serializable {
     private int status;
     private Collection<Producto> productosByIdTienda;
     private Usuario usuarioByIdUsuario;
-    private Ciudad ciudadByIdCiudad;
     private String ine;
     private String fotoPerfil;
     private Integer statusIne;
@@ -24,6 +23,9 @@ public class Tienda implements Serializable {
     private Integer activaJornada;
     private String nombreCompleto;
     private Integer statusNombreCompleto;
+    private String tipoTienda;
+    private Collection<IngredientesExtra> ingredientesExtrasByIdTienda;
+    private Direccion direccionByIdDireccion;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,16 +98,6 @@ public class Tienda implements Serializable {
 
     public void setUsuarioByIdUsuario(Usuario usuarioByIdUsuario) {
         this.usuarioByIdUsuario = usuarioByIdUsuario;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad", nullable = false)
-    public Ciudad getCiudadByIdCiudad() {
-        return ciudadByIdCiudad;
-    }
-
-    public void setCiudadByIdCiudad(Ciudad ciudadByIdCiudad) {
-        this.ciudadByIdCiudad = ciudadByIdCiudad;
     }
 
     @Basic
@@ -186,5 +178,34 @@ public class Tienda implements Serializable {
 
     public void setStatusNombreCompleto(Integer statusNombreCompleto) {
         this.statusNombreCompleto = statusNombreCompleto;
+    }
+
+    @Basic
+    @Column(name = "tipo_tienda", nullable = true, length = 50)
+    public String getTipoTienda() {
+        return tipoTienda;
+    }
+
+    public void setTipoTienda(String tipoTienda) {
+        this.tipoTienda = tipoTienda;
+    }
+
+    @OneToMany(mappedBy = "tiendaByIdTienda")
+    public Collection<IngredientesExtra> getIngredientesExtrasByIdTienda() {
+        return ingredientesExtrasByIdTienda;
+    }
+
+    public void setIngredientesExtrasByIdTienda(Collection<IngredientesExtra> ingredientesExtrasByIdTienda) {
+        this.ingredientesExtrasByIdTienda = ingredientesExtrasByIdTienda;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_direccion", referencedColumnName = "id_direccion")
+    public Direccion getDireccionByIdDireccion() {
+        return direccionByIdDireccion;
+    }
+
+    public void setDireccionByIdDireccion(Direccion direccionByIdDireccion) {
+        this.direccionByIdDireccion = direccionByIdDireccion;
     }
 }

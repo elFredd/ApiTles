@@ -13,7 +13,7 @@ public class Ciudad implements Serializable {
     private int radioKm;
     private Estado estadoByIdEstado;
     private Collection<Repartidor> repartidorsByIdCiudad;
-    private Collection<Tienda> tiendasByIdCiudad;
+    private Collection<Direccion> direccionsByIdCiudad;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,12 +78,12 @@ public class Ciudad implements Serializable {
         this.repartidorsByIdCiudad = repartidorsByIdCiudad;
     }
 
-    @OneToMany(mappedBy = "ciudadByIdCiudad")
-    public Collection<Tienda> getTiendasByIdCiudad() {
-        return tiendasByIdCiudad;
+    @OneToMany(mappedBy = "ciudadByIdUsuario")
+    public Collection<Direccion> getDireccionsByIdCiudad() {
+        return direccionsByIdCiudad;
     }
 
-    public void setTiendasByIdCiudad(Collection<Tienda> tiendasByIdCiudad) {
-        this.tiendasByIdCiudad = tiendasByIdCiudad;
+    public void setDireccionsByIdCiudad(Collection<Direccion> direccionsByIdCiudad) {
+        this.direccionsByIdCiudad = direccionsByIdCiudad;
     }
 }

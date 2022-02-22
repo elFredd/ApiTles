@@ -23,12 +23,11 @@ public class GuardarImagenIne extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Entro al metodo 123");
-        String root = getServletContext().getRealPath("/");
         response.setContentType("text/html; charset=UTF-8");
         Servicios servicios = new Servicios();
         Tienda tienda=(Tienda)servicios.buscarUnicoValor("FROM Tienda WHERE usuarioByIdUsuario="+request.getParameter("usuarioId"));
         tienda.setStatusIne(0);
-        String path=root+"/uploads/TheStore/INE";
+        String path=request.getContextPath()+"/uploads/TheStore/INE";
         String nombre=tienda.getUsuarioByIdUsuario().getNombre()+tienda.getIdTienda()+".png";
         new UploadsFiles().uploadImagenDataUrl(path,nombre,request.getParameter("dataUrlImagen"));
         tienda.setIne(path+"/"+nombre);

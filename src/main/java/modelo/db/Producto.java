@@ -2,6 +2,7 @@ package modelo.db;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -14,8 +15,11 @@ public class Producto implements Serializable {
     private int cantidad;
     private int status;
     private String imagen;
-    private String tipoProducto;
     private Tienda tiendaByIdTienda;
+    private String descripcion;
+    private Categoria categoriaByIdCategoria;
+    private Collection<ProdIngre> prodIngresByIdProducto;
+    private Collection<VarianteProducto> varianteProductosByIdProducto;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,27 +92,17 @@ public class Producto implements Serializable {
         this.imagen = imagen;
     }
 
-    @Basic
-    @Column(name = "tipo_producto", nullable = false, length = 50)
-    public String getTipoProducto() {
-        return tipoProducto;
-    }
-
-    public void setTipoProducto(String tipoProducto) {
-        this.tipoProducto = tipoProducto;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Producto producto = (Producto) o;
-        return idProducto == producto.idProducto && Double.compare(producto.precio, precio) == 0 && duracion == producto.duracion && cantidad == producto.cantidad && status == producto.status && Objects.equals(nombre, producto.nombre) && Objects.equals(imagen, producto.imagen) && Objects.equals(tipoProducto, producto.tipoProducto);
+        return idProducto == producto.idProducto && Double.compare(producto.precio, precio) == 0 && duracion == producto.duracion && cantidad == producto.cantidad && status == producto.status && Objects.equals(nombre, producto.nombre) && Objects.equals(imagen, producto.imagen) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProducto, nombre, precio, duracion, cantidad, status, imagen, tipoProducto);
+        return Objects.hash(idProducto, nombre, precio, duracion, cantidad, status, imagen);
     }
 
     @ManyToOne
@@ -119,5 +113,43 @@ public class Producto implements Serializable {
 
     public void setTiendaByIdTienda(Tienda tiendaByIdTienda) {
         this.tiendaByIdTienda = tiendaByIdTienda;
+    }
+
+    @Basic
+    @Column(name = "descripcion", nullable = true, length = 500)
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    public Categoria getCategoriaByIdCategoria() {
+        return categoriaByIdCategoria;
+    }
+
+    public void setCategoriaByIdCategoria(Categoria categoriaByIdCategoria) {
+        this.categoriaByIdCategoria = categoriaByIdCategoria;
+    }
+
+    @OneToMany(mappedBy = "productoByIdProducto")
+    public Collection<ProdIngre> getProdIngresByIdProducto() {
+        return prodIngresByIdProducto;
+    }
+
+    public void setProdIngresByIdProducto(Collection<ProdIngre> prodIngresByIdProducto) {
+        this.prodIngresByIdProducto = prodIngresByIdProducto;
+    }
+
+    @OneToMany(mappedBy = "productoByIdProducto")
+    public Collection<VarianteProducto> getVarianteProductosByIdProducto() {
+        return varianteProductosByIdProducto;
+    }
+
+    public void setVarianteProductosByIdProducto(Collection<VarianteProducto> varianteProductosByIdProducto) {
+        this.varianteProductosByIdProducto = varianteProductosByIdProducto;
     }
 }

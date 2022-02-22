@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
     private Integer validarCorreo;
     private Integer validarTelefono;
     private Integer puntos;
+    private Collection<Direccion> direccionsByIdUsuario;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -175,5 +176,14 @@ public class Usuario implements Serializable {
 
     public void setPuntos(Integer puntos) {
         this.puntos = puntos;
+    }
+
+    @OneToMany(mappedBy = "usuarioByIdUsuario")
+    public Collection<Direccion> getDireccionsByIdUsuario() {
+        return direccionsByIdUsuario;
+    }
+
+    public void setDireccionsByIdUsuario(Collection<Direccion> direccionsByIdUsuario) {
+        this.direccionsByIdUsuario = direccionsByIdUsuario;
     }
 }
